@@ -67,13 +67,30 @@ switch (number)
         string oneZeroMorse = "110011001100110000001100000011111100110" +
             "011111100111111000000000000001100111111001111110011111100" +
             "0000110011001111110000001111110011001100000011";
+        string xzZeroMorse = "1110000111000011100001110000000001110000000001111100001110000" +
+            "11111000011111000000000000111000011111000011111000011111000000000" +
+            "11100001110000111110000000001111100001110000111000000000111";
         int timeUnit = 2;
-        Console.WriteLine(Main.DecodeMorse.Katasix(Main.DecodeMorse.KatasixOneZero(oneZeroMorse, timeUnit)));
+        //Console.WriteLine(Main.DecodeMorse.Katasix(Main.DecodeMorse.KatasixOneZero(oneZeroMorse, timeUnit)));
+        //Console.WriteLine(Main.DecodeMorse.Katasix(Main.DecodeMorse.KataTwoOneZero(xzZeroMorse)));
+        //Console.WriteLine(Main.DecodeMorse.KataTwoOneZero(xzZeroMorse));
+        Console.WriteLine(Main.DecodeMorse.Katasix(xzZeroMorse));
+        break;
+    case 11:
+        string huita = "111000111";
+        string[] huiArray = huita.Split(',');
         break;
 
     case 5:
         // link: https://www.codewars.com/kata/5659c6d896bc135c4c00021e
         string num = "1";
         Console.WriteLine(Main.NextSmailerNum.nextSmailer(num));
+        break;
+
+    case 6:
+        // link https://www.codewars.com/kata/621f89cc94d4e3001bb99ef4
+        int open = Convert.ToInt32(Console.ReadLine());
+        int close = Convert.ToInt32(Console.ReadLine());
+        Console.WriteLine(Main.DontGiveMeFive.GiveMe(open, close));
         break;
 }

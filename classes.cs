@@ -3,6 +3,7 @@ using MySqlX.XDevAPI.Common;
 using Org.BouncyCastle.Asn1.Cms;
 using Org.BouncyCastle.Asn1.Crmf;
 using Org.BouncyCastle.Crypto.Generators;
+using Org.BouncyCastle.Security;
 using System;
 using System.Diagnostics;
 using System.Diagnostics.Metrics;
@@ -161,6 +162,7 @@ public static class Main
         // Decodes Morse code
         public static string Katasix(string forDecode)
         {
+            forDecode = KataTwoOneZero(forDecode);
             string result = "";
             forDecode = forDecode.Replace("   ", " _ ");
             string[] text = forDecode.Split(new string[] { " " }, StringSplitOptions.RemoveEmptyEntries);
@@ -174,7 +176,6 @@ public static class Main
         public static string KatasixOneZero(string forDecodeOneZero, int unit)
         {
             // Deciphers Morse code from zeros and ones
-            string result = "";
             if (unit == 2)
             {
                 forDecodeOneZero = forDecodeOneZero.Replace("00000000000000", "   ");
@@ -192,6 +193,72 @@ public static class Main
                 forDecodeOneZero = forDecodeOneZero.Replace("0", "");
             }
             return forDecodeOneZero;
+        }
+
+        public static string KataTwoOneZero(string forDecod)
+        {
+            forDecod = forDecod.Replace(KataTwoCheckZero(forDecod), "   ");
+            forDecod = forDecod.Replace(KataTwoCheckOne(forDecod), "-");
+            forDecod = forDecod.Replace(KataTwoCheckOne(forDecod), ".");
+            forDecod = forDecod.Replace(KataTwoCheckZero(forDecod), " ");
+            forDecod = forDecod.Replace(KataTwoCheckZero(forDecod), "");
+            return forDecod;
+        }
+
+        private static string KataTwoCheckZero(string forDecoder)
+        {
+            string snum1 = "";
+            string snum2 = "";
+            string tmp;
+            char[] valueArray = forDecoder.ToCharArray();
+            string chepolino = String.Join(",", valueArray);
+            string[] items = chepolino.Split(',');
+            foreach (string item in items)
+            {
+                tmp = item;
+                if (tmp == "0")
+                {
+                    snum1 += "0";
+                }
+                else
+                {
+                    if (snum1.Length > snum2.Length)
+                    {
+                        snum2 = snum1;
+                        snum1 = "";
+                    }
+                    else snum1 = "";
+                }
+            }
+            return snum2;
+        }
+
+        private static string KataTwoCheckOne(string forDecoder)
+        {
+            string snum1 = "";
+            string snum2 = "";
+            string tmp;
+            char[] valueArray = forDecoder.ToCharArray();
+            string chepolino = String.Join(",", valueArray);
+            string[] items = chepolino.Split(',');
+            foreach (string item in items)
+            {
+                tmp = item;
+                if (tmp == "1")
+                {
+                    snum1 += "1";
+                }
+                else 
+                {
+                    if (snum1.Length > snum2.Length)
+                    {
+                        snum2 = snum1;
+                        snum1 = "";
+                    }
+                    else snum1 = "";
+                }
+            }
+            return snum2;
         }
 
         private static Dictionary<string, string> MorseToAbc = new Dictionary<string, string>()
@@ -325,5 +392,40 @@ public static class Main
             }
             return 1;
         }
+    }
+
+    public static class DontGiveMeFive
+    {
+        public static int GiveMe(int openNum, int closeNum)
+        {
+            int result = closeNum - openNum + 1;
+            int tmp = closeNum;
+            int digit = closeNum % 10;
+            if (digit < 5) tmp = tmp - digit - 5;
+            if (digit > 5)
+            {
+                int digitTwo = closeNum % 5;
+                tmp = tmp - digitTwo;
+            }
+            while (tmp > openNum)
+            {
+                tmp = tmp - 10;
+                result = result - 1;
+            }
+
+            return result;
+        }
+    }
+    public static string getBetween(string strSource, string strStart, string strEnd)
+    {
+        if (strSource.Contains(strStart) && strSource.Contains(strEnd))
+        {
+            int Start, End;
+            Start = strSource.IndexOf(strStart, 0) + strStart.Length;
+            End = strSource.IndexOf(strEnd, Start);
+            return strSource.Substring(Start, End - Start);
+        }
+
+        return "";
     }
 }
