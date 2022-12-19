@@ -11,6 +11,7 @@ using System.Diagnostics.SymbolStore;
 using System.Globalization;
 using System.Runtime.ExceptionServices;
 using System.Security.Cryptography.X509Certificates;
+using System.Xml.Linq;
 using static Main;
 
 public static class Main
@@ -427,5 +428,64 @@ public static class Main
         }
 
         return "";
+    }
+
+    public static class ConverterToFromBinary
+    {
+        public static string ToBinary(string num1)
+        {
+            int fromBase = 10;
+            int toBase = 2;
+            string result = Convert.ToString(Convert.ToInt32(num1, fromBase), toBase);
+            return result;
+        }
+
+        public static string FromBinary(string num1)
+        {
+            int fromBase = 2;
+            int toBase = 10;
+            string result = Convert.ToString(Convert.ToInt32(num1, fromBase), toBase);
+            return result;
+        }
+    }
+
+    public static class StripCommentsSolution
+    {
+        public static string StripComments(String text, string[] symbols)
+        {
+            string[] processing = text.Split("\n");
+            string resultText = text;
+            string result = "";
+            string temp = "";
+            foreach (string proc in processing)
+            {
+                string ttmp = proc;
+                foreach (string symb in symbols)
+                {
+                    char stmp = Convert.ToChar(symb);
+                    int z = 0;
+                    for (int i = 0; i < ttmp.Length; i++)
+                    {
+                        if (ttmp[i] == stmp)
+                        {
+                            temp = Convert.ToString(stmp);
+                        }
+                    }
+                }
+                if (temp != "")
+                {
+                    result += ttmp.Remove(ttmp.IndexOf(temp), ttmp.Length);
+                    result += "\n";
+                    temp = "";
+                }
+                else
+                {
+                    result += ttmp;
+                    result += "\n";
+                }
+                Console.Write(result);
+            }
+            return result;
+        }
     }
 }
